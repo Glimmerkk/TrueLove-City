@@ -7,11 +7,15 @@ export default function Profile() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // ✅ fallback to data if state is missing (refresh fix)
-  const profileFromData = profiles.find((p) => p.id === Number(id));
+  // ✅ FIXED: supports BOTH id and name routes
+  const profileFromData = profiles.find(
+    (p) =>
+      p.id === Number(id) ||
+      p.name.toLowerCase() === id.toLowerCase()
+  );
+
   const profile = state || profileFromData;
 
-  // If no data at all
   if (!profile) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white">
@@ -30,30 +34,24 @@ export default function Profile() {
     <div className="min-h-screen bg-gray-900 text-white py-10 px-4">
       <div className="max-w-5xl mx-auto">
 
-        {/* MAIN CARD */}
         <div className="bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
 
-          {/* IMAGE */}
           <img
             src={profile.image || profile.images?.[0]}
             alt={profile.name}
             className="w-full h-96 object-cover"
           />
 
-          {/* CONTENT */}
           <div className="p-6">
 
-            {/* NAME */}
             <h1 className="text-3xl font-bold">
               {profile.name}, {profile.age}
             </h1>
 
-            {/* BIO */}
             <p className="text-gray-300 mt-3">
               {profile.bio || profile.about}
             </p>
 
-            {/* TAGS */}
             <div className="flex flex-wrap gap-2 mt-4">
               {(profile.tags || profile.interests)?.map((tag, i) => (
                 <span
@@ -65,10 +63,8 @@ export default function Profile() {
               ))}
             </div>
 
-            {/* BUTTONS */}
             <div className="mt-6 flex gap-4">
 
-              {/* TELEGRAM */}
               <a
                 href={profile.telegram || "https://t.me/yourusername"}
                 target="_blank"
@@ -78,7 +74,6 @@ export default function Profile() {
                 Chat on Telegram
               </a>
 
-              {/* BACK */}
               <button
                 onClick={() => navigate(-1)}
                 className="flex-1 bg-gray-700 hover:bg-gray-600 py-3 rounded-lg"

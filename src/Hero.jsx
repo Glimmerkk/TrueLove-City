@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Hero() {
   const navigate = useNavigate();
@@ -36,12 +36,12 @@ export default function Hero() {
                 Curated profiles, verified photos, and meaningful matches.
               </p>
 
-              <a
-                href="/browse"
+              <Link
+                to="/browse"
                 className="inline-block mt-6 bg-pink-500 px-6 py-3 rounded-full text-white hover:bg-pink-600"
               >
                 Browse Profiles
-              </a>
+              </Link>
             </div>
           </div>
         </div>
