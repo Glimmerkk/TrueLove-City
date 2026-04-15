@@ -1,12 +1,18 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { profiles } from "./data";
 
 export default function Profile() {
   const { state } = useLocation();
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  // If no data (refresh case)
-  if (!state) {
+  // ✅ fallback to data if state is missing (refresh fix)
+  const profileFromData = profiles.find((p) => p.id === Number(id));
+  const profile = state || profileFromData;
+
+  // If no data at all
+  if (!profile) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white">
         <h1 className="text-2xl font-bold">No profile selected</h1>
@@ -29,8 +35,8 @@ export default function Profile() {
 
           {/* IMAGE */}
           <img
-            src={state.image}
-            alt={state.name}
+            src={profile.image || profile.images?.[0]}
+            alt={profile.name}
             className="w-full h-96 object-cover"
           />
 
@@ -39,17 +45,17 @@ export default function Profile() {
 
             {/* NAME */}
             <h1 className="text-3xl font-bold">
-              {state.name}, {state.age}
+              {profile.name}, {profile.age}
             </h1>
 
             {/* BIO */}
             <p className="text-gray-300 mt-3">
-              {state.bio}
+              {profile.bio || profile.about}
             </p>
 
             {/* TAGS */}
             <div className="flex flex-wrap gap-2 mt-4">
-              {state.tags.map((tag, i) => (
+              {(profile.tags || profile.interests)?.map((tag, i) => (
                 <span
                   key={i}
                   className="px-3 py-1 bg-pink-500/20 text-pink-300 text-sm rounded-full"
@@ -64,7 +70,7 @@ export default function Profile() {
 
               {/* TELEGRAM */}
               <a
-                href="https://t.me/yourusername"
+                href={profile.telegram || "https://t.me/yourusername"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 text-center bg-blue-500 hover:bg-blue-600 py-3 rounded-lg font-semibold"

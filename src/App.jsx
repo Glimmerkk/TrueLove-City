@@ -2,9 +2,8 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Hero from "./Hero";
 import Browse from "./Browse";
 import SecurityPolicy from "./SecurityPolicy";
-import Profile from "./Profile"; // ✅ KEEP THIS
+import Profile from "./Profile";
 
-// ✅ ADD THESE IMPORTS
 import Anna from "./Anna";
 import Bella from "./Bella";
 import Sofia from "./Sofia";
@@ -23,7 +22,9 @@ export default function App() {
           <div className="space-x-4">
             <Link to="/">Home</Link>
             <Link to="/browse">Browse</Link>
-            <Link to="/security">Security</Link>
+
+            {/* ✅ FIX: route name must match */}
+            <Link to="/security-policy">Security</Link>
           </div>
         </nav>
 
@@ -31,16 +32,20 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Hero />} />
           <Route path="/browse" element={<Browse />} />
-          <Route path="/security" element={<SecurityPolicy />} />
 
-          {/* ✅ KEEP EXISTING */}
+          {/* ✅ FIX: must match navbar link */}
+          <Route path="/security-policy" element={<SecurityPolicy />} />
+
+          {/* ✅ KEEP (optional if still used) */}
           <Route path="/profile/:id" element={<Profile />} />
 
-          {/* ✅ ADD THESE ROUTES ONLY */}
+          {/* Individual pages */}
           <Route path="/anna" element={<Anna />} />
           <Route path="/bella" element={<Bella />} />
           <Route path="/sofia" element={<Sofia />} />
 
+          {/* ✅ OPTIONAL: fallback to prevent "Not Found" */}
+          <Route path="*" element={<Hero />} />
         </Routes>
 
       </div>
