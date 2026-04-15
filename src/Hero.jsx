@@ -7,7 +7,7 @@ export default function Hero() {
   const handleReserve = (person) => {
     if (person.name === "Anna") navigate("/anna");
     else if (person.name === "Bella") navigate("/bella");
-    else navigate("/profile", { state: person });
+    else navigate(`/profile/${person.name}`, { state: person }); // ✅ FIXED
   };
 
   return (
