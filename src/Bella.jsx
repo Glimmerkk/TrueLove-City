@@ -5,7 +5,7 @@ export default function Bella() {
     name: "Bella Martinez",
     age: 28,
     occupation: "Graphic Designer",
-    telegram: "https://t.me/Quenjane2?text=Hi%20Bella",
+    telegram: "https://t.me/Truelovecity_bot?text=Hi%20Bella",
     about: "Creative soul who loves art, food, and exploring new places.",
     interests: ["Art", "Music", "Food", "Museums"],
     images: [
